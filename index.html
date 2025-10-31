@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Tour - Explore Jogja, Create Memories</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+            background: #f8f9fa;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #FF6B6B;
+        }
+
+        /* Carousel/Jumbotron */
+        .carousel-container {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            margin-top: 0;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .slide1 {
+            background: linear-gradient(135deg, rgba(123, 163, 199, 0.85), rgba(157, 190, 187, 0.85)),
+                        linear-gradient(135deg, #E8F4F8 0%, #D4E8E4 100%);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide2 {
+            background: linear-gradient(135deg, rgba(157, 190, 187, 0.85), rgba(168, 199, 168, 0.85)),
+                        linear-gradient(135deg, #D4E8E4 0%, #E0EDD7 100%);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide3 {
+            background: linear-gradient(135deg, rgba(168, 199, 168, 0.85), rgba(196, 211, 184, 0.85)),
+                        linear-gradient(135deg, #E0EDD7 0%, #F0F4E8 100%);
+            background-size: cover;
+            background-position: center;
+        }
+
+        .carousel-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            z-index: 2;
+        }
+
+        .carousel-content h1 {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 20px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .carousel-content p {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .cta-button {
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #7BA3C7, #9DBEBB);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            animation: fadeInUp 1s ease-out 0.7s both;
+            box-shadow: 0 10px 30px rgba(123, 163, 199, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(123, 163, 199, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Icon animation */
+        .adventure-icon {
+            font-size: 3rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* Destinations Section */
+        .section {
+            padding: 5rem 10%;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #7BA3C7, #9DBEBB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .destination-card {
+            background: #fff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .destination-card::after {
+            content: 'Click for details →';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(123, 163, 199, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(123, 163, 199, 0.2);
+        }
+
+        .destination-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 30px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            position: relative;
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 30px 30px 0 0;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .modal-title {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            color: white;
+            font-size: 2.5rem;
+            z-index: 2;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 3;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            background: white;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h3 {
+            font-size: 1.5rem;
+            color: #FF6B6B;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-section p, .modal-section ul {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .modal-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .modal-section ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .modal-section ul li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4ECDC4;
+            font-weight: bold;
+        }
+
+        .modal-cta {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .modal-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #FFF5E6, #E6F9FF);
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .info-box-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box-label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-box-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .destination-image {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .destination-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+        }
+
+        .destination-icon {
+            font-size: 5rem;
+            z-index: 2;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
+
+        .destination-content {
+            padding: 1.5rem;
+        }
+
+        .destination-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+
+        .destination-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .destination-tag {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: linear-gradient(135deg, #C4D7E0, #A8C7A8);
+            color: #fff;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Services Section */
+        .services-section {
+            background: linear-gradient(135deg, #F5F9FA 0%, #E8F4F8 100%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: scale(1.05);
+        }
+
+        .service-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #7BA3C7;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Booking Section */
+        .booking-section {
+            background: linear-gradient(135deg, #9DBEBB 0%, #A8C7A8 100%);
+            color: #fff;
+        }
+
+        .booking-section .section-title {
+            color: #fff;
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: unset;
+        }
+
+        .booking-section .section-subtitle {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .booking-container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #E6F9FF;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #7BA3C7;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #7BA3C7, #9DBEBB);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(123, 163, 199, 0.4);
+        }
+
+        /* Info Section */
+        .info-section {
+            background: #fff;
+            text-align: center;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, #FFF5E6, #E6F9FF);
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+            color: #FF6B6B;
+            margin-bottom: 1rem;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #7BA3C7, #9DBEBB);
+            color: #fff;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .footer-tagline {
+            font-size: 1.3rem;
+            font-style: italic;
+            margin-top: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .carousel-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .carousel-content p {
+                font-size: 1.2rem;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+            }
+
+            .section {
+                padding: 3rem 5%;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .booking-container {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🗺️ Track Tour</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#destinations">Destinations</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#booking">Book Now</a></li>
+        </ul>
+    </nav>
+
+    <!-- Carousel/Jumbotron -->
+    <div class="carousel-container" id="home">
+        <div class="carousel-slide slide1 active">
+            <div class="carousel-content">
+                <div class="adventure-icon">🏝️</div>
+                <h1>Discover Yogyakarta</h1>
+                <p class="tagline">Explore Jogja, Create Memories</p>
+                <a href="#booking" class="cta-button">Start Your Adventure</a>
+            </div>
+        </div>
+        <div class="carousel-slide slide2">
+            <div class="carousel-content">
+                <div class="adventure-icon">🌄</div>
+                <h1>Natural Wonders Await</h1>
+                <p class="tagline">From Beaches to Mountains</p>
+                <a href="#destinations" class="cta-button">Explore Destinations</a>
+            </div>
+        </div>
+        <div class="carousel-slide slide3">
+            <div class="carousel-content">
+                <div class="adventure-icon">🏛️</div>
+                <h1>Cultural Heritage Tours</h1>
+                <p class="tagline">Experience History & Tradition</p>
+                <a href="#booking" class="cta-button">Book Your Tour</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Destinations Section -->
+    <section class="section" id="destinations">
+        <h2 class="section-title">Popular Destinations</h2>
+        <p class="section-subtitle">Explore the best of Yogyakarta with our curated tours</p>
+        <div class="destinations-grid">
+            <div class="destination-card" onclick="openModal('keraton')">
+                <div class="destination-image" style="background: linear-gradient(135deg, #C4D7E0, #A8C7C8);">
+                    <div class="destination-icon">🏛️</div>
+                </div>
+                <div class="destination-content">
+                    <h3>Keraton Yogyakarta</h3>
+                    <p>Experience the royal palace of Yogyakarta Sultan. Dive into Javanese culture and witness traditional ceremonies in this living palace.</p>
+                    <span class="destination-tag">Cultural</span>
+                </div>
+            </div>
+            
+            <div class="destination-card" onclick="openModal('prambanan')">
+                <div class="destination-image" style="background: linear-gradient(135deg, #D4C4E0, #B8A8C8);">
+                    <div class="destination-icon">🕌</div>
+                </div>
+                <div class="destination-content">
+                    <h3>Candi Prambanan</h3>
+                    <p>Marvel at the stunning 9th-century Hindu temple complex, a UNESCO World Heritage site with intricate stone carvings.</p>
+                    <span class="destination-tag">Historical</span>
+                </div>
+            </div>
+            
+            <div class="destination-card" onclick="openModal('parangtritis')">
+                <div class="destination-image" style="background: linear-gradient(135deg, #A8C7D8, #8FB3C8);">
+                    <div class="destination-icon">🏖️</div>
+                </div>
+                <div class="destination-content">
+                    <h3>Pantai Parangtritis</h3>
+                    <p>Relax at Yogyakarta's most famous beach with black sand, mystical legends, and breathtaking sunset views.</p>
+                    <span class="destination-tag">Beach</span>
+                </div>
+            </div>
+            
+            <div class="destination-card" onclick="openModal('pinus')">
+                <div class="destination-image" style="background: linear-gradient(135deg, #A8C7A8, #8FB398);">
+                    <div class="destination-icon">🌲</div>
+                </div>
+                <div class="destination-content">
+                    <h3>Hutan Pinus Mangunan</h3>
+                    <p>Escape to the serene pine forest with Instagram-worthy spots and fresh mountain air perfect for nature lovers.</p>
+                    <span class="destination-tag">Nature</span>
+                </div>
+            </div>
+            
+            <div class="destination-card" onclick="openModal('heha')">
+                <div class="destination-image" style="background: linear-gradient(135deg, #9DBEBB, #84A9A5);">
+                    <div class="destination-icon">🌊</div>
+                </div>
+                <div class="destination-content">
+                    <h3>HeHa Ocean View</h3>
+                    <p>Enjoy panoramic ocean views from this modern attraction featuring sky dining and various photo spots.</p>
+                    <span class="destination-tag">Adventure</span>
+                </div>
+            </div>
+            
+            <div class="destination-card" onclick="openModal('malioboro')">
+                <div class="destination-image" style="background: linear-gradient(135deg, #E0C4A8, #C8B098);">
+                    <div class="destination-icon">🛍️</div>
+                </div>
+                <div class="destination-content">
+                    <h3>Jalan Malioboro</h3>
+                    <p>Shop for souvenirs, taste local street food, and immerse yourself in the vibrant heart of Yogyakarta's city life.</p>
+                    <span class="destination-tag">Urban</span>
+                </div>
+            </div>
+            
+            <div class="destination-card" onclick="openModal('alun-alun')">
+                <div class="destination-image" style="background: linear-gradient(135deg, #B8C4D8, #A0B0C8);">
+                    <div class="destination-icon">🌃</div>
+                </div>
+                <div class="destination-content">
+                    <h3>Alun-Alun Selatan</h3>
+                    <p>Experience the magical night atmosphere with colorful lights, traditional snacks, and the famous Masangin challenge.</p>
+                    <span class="destination-tag">Urban</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services-section" id="services">
+        <h2 class="section-title">What's Included</h2>
+        <p class="section-subtitle">Complete tour packages with everything you need</p>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🚐</div>
+                <h3>Transportation</h3>
+                <p>Comfortable air-conditioned vehicle with experienced driver for your entire journey.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">👨‍🏫</div>
+                <h3>Professional Guide</h3>
+                <p>Friendly and knowledgeable local guides who share fascinating stories and insights.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🍽️</div>
+                <h3>Meals Included</h3>
+                <p>Enjoy authentic local cuisine as part of your tour experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <section class="section info-section">
+        <h2 class="section-title">Important Information</h2>
+        <div class="info-cards">
+            <div class="info-card">
+                <h3>📅 Advance Booking Required</h3>
+                <p>Please book your tour at least 24-48 hours in advance to ensure availability and proper arrangements.</p>
+            </div>
+            <div class="info-card">
+                <h3>📍 Meeting Point</h3>
+                <p>We'll confirm the exact meeting location upon booking confirmation. Convenient pickup options available.</p>
+            </div>
+            <div class="info-card">
+                <h3>💰 Flexible Packages</h3>
+                <p>Choose single destination or combine multiple locations for better value. Custom itineraries available!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="section booking-section" id="booking">
+        <h2 class="section-title">Book Your Adventure</h2>
+        <p class="section-subtitle">Fill out the form below and we'll get back to you shortly</p>
+        
+        <div class="booking-container">
+            <form id="bookingForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" name="phone" required placeholder="e.g., 081234567890">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Number of People *</label>
+                        <input type="number" name="people" required min="1" placeholder="e.g., 4">
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Date *</label>
+                        <input type="date" name="date" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Destinations *</label>
+                    <select name="destinations" required>
+                        <option value="">Select destinations</option>
+                        <option value="keraton">Keraton Yogyakarta</option>
+                        <option value="prambanan">Candi Prambanan</option>
+                        <option value="parangtritis">Pantai Parangtritis</option>
+                        <option value="pinus">Hutan Pinus Mangunan</option>
+                        <option value="heha">HeHa Ocean View</option>
+                        <option value="malioboro">Jalan Malioboro</option>
+                        <option value="alun-alun">Alun-Alun Selatan</option>
+                        <option value="multiple">Multiple Destinations (Custom Package)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Special Requests / Additional Destinations</label>
+                    <textarea name="message" rows="4" placeholder="Tell us about your preferences, dietary restrictions, or any special requests..."></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">🗺️ Book My Tour</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Modals for each destination -->
+    <div id="modal" class="modal">
+        <div class="modal-content" id="modalContent">
+            <!-- Content will be dynamically inserted -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>Track Tour</strong></p>
+        <p>📍 Yogyakarta, Indonesia</p>
+        <p>📧 Contact us for custom tour packages</p>
+        <p class="footer-tagline">Explore Jogja, Create Memories ✨</p>
+        <p style="margin-top: 2rem; opacity: 0.8;">&copy; 2024 Track Tour. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Destination data
+        const destinations = {
+            keraton: {
+                name: 'Keraton Yogyakarta',
+                image: 'linear-gradient(135deg, #C4D7E0, #A8C7C8)',
+                icon: '🏛️',
+                description: 'The Keraton Yogyakarta is not just a palace, but a living cultural center that has been the heart of Javanese tradition for centuries. Built in 1755, this magnificent palace complex serves as the official residence of the Sultan of Yogyakarta and remains a functioning royal court.',
+                highlights: [
+                    'Witness traditional Javanese court ceremonies',
+                    'Explore stunning Dutch-Javanese architecture',
+                    'Visit the palace museum with royal artifacts',
+                    'Experience gamelan music performances',
+                    'Learn about Javanese philosophy and culture'
+                ],
+                bestTime: 'Morning (9AM - 12PM)',
+                duration: '2-3 hours',
+                difficulty: 'Easy'
+            },
+            prambanan: {
+                name: 'Candi Prambanan',
+                image: 'linear-gradient(135deg, #D4C4E0, #B8A8C8)',
+                icon: '🕌',
+                description: 'Prambanan is the largest Hindu temple complex in Indonesia and a UNESCO World Heritage Site. Built in the 9th century, this architectural marvel features towering spires reaching 47 meters high, adorned with intricate stone carvings depicting the epic Ramayana.',
+                highlights: [
+                    'Marvel at 240 temples in the complex',
+                    'See detailed stone carvings of Hindu deities',
+                    'Watch the spectacular Ramayana Ballet performance',
+                    'Capture stunning sunset photographs',
+                    'Explore the temple museum and exhibition'
+                ],
+                bestTime: 'Late Afternoon (4PM - 6PM)',
+                duration: '3-4 hours',
+                difficulty: 'Moderate'
+            },
+            parangtritis: {
+                name: 'Pantai Parangtritis',
+                image: 'linear-gradient(135deg, #A8C7D8, #8FB3C8)',
+                icon: '🏖️',
+                description: 'Parangtritis is Yogyakarta\'s most iconic beach, famous for its distinctive black volcanic sand and powerful waves. Steeped in local legend as the dwelling place of the mythical Queen of the South Sea, this beach offers a mystical atmosphere combined with natural beauty.',
+                highlights: [
+                    'Experience breathtaking sunset views',
+                    'Try sandboarding on the dunes',
+                    'Enjoy traditional horse cart rides',
+                    'Explore nearby caves and cliffs',
+                    'Taste fresh seafood at beachside warungs'
+                ],
+                bestTime: 'Late Afternoon (4PM - 7PM)',
+                duration: '3-4 hours',
+                difficulty: 'Easy'
+            },
+            pinus: {
+                name: 'Hutan Pinus Mangunan',
+                image: 'linear-gradient(135deg, #A8C7A8, #8FB398)',
+                icon: '🌲',
+                description: 'Hutan Pinus Mangunan is a serene pine forest located in the highlands near Yogyakarta. This Instagram-famous destination offers a cool climate, fresh mountain air, and countless photo-worthy spots among towering pine trees, making it perfect for nature lovers and photography enthusiasts.',
+                highlights: [
+                    'Walk through enchanting pine tree paths',
+                    'Capture photos at creative installations',
+                    'Enjoy panoramic views from viewpoints',
+                    'Experience cool mountain climate',
+                    'Relax in peaceful natural surroundings'
+                ],
+                bestTime: 'Early Morning (6AM - 10AM)',
+                duration: '2-3 hours',
+                difficulty: 'Easy'
+            },
+            heha: {
+                name: 'HeHa Ocean View',
+                image: 'linear-gradient(135deg, #9DBEBB, #84A9A5)',
+                icon: '🌊',
+                description: 'HeHa Ocean View is a modern tourist attraction perched on a cliff offering spectacular panoramic views of the Indian Ocean. This innovative destination combines stunning natural scenery with contemporary amenities, including sky dining experiences and numerous Instagram-worthy photo spots.',
+                highlights: [
+                    'Dine at the sky restaurant with ocean views',
+                    'Visit multiple themed photo zones',
+                    'Enjoy cliff-edge viewpoints',
+                    'Watch spectacular sunsets over the ocean',
+                    'Experience modern amenities in natural setting'
+                ],
+                bestTime: 'Late Afternoon (3PM - 7PM)',
+                duration: '2-3 hours',
+                difficulty: 'Easy'
+            },
+            malioboro: {
+                name: 'Jalan Malioboro',
+                image: 'linear-gradient(135deg, #E0C4A8, #C8B098)',
+                icon: '🛍️',
+                description: 'Jalan Malioboro is the beating heart of Yogyakarta, a legendary shopping street that has been the city\'s main thoroughfare since the Dutch colonial era. This vibrant 2-kilometer street is lined with shops, street vendors, restaurants, and traditional becak (cycle rickshaws), offering an authentic taste of Jogja\'s urban culture.',
+                highlights: [
+                    'Shop for traditional batik and souvenirs',
+                    'Try famous Jogja street food (gudeg, bakpia)',
+                    'Ride traditional becak through the street',
+                    'Visit historical buildings and monuments',
+                    'Experience vibrant night market atmosphere'
+                ],
+                bestTime: 'Evening (5PM - 9PM)',
+                duration: '2-4 hours',
+                difficulty: 'Easy'
+            },
+            'alun-alun': {
+                name: 'Alun-Alun Selatan',
+                image: 'linear-gradient(135deg, #B8C4D8, #A0B0C8)',
+                icon: '🌃',
+                description: 'Alun-Alun Selatan (South Square) transforms into a magical wonderland at night, with colorful lights creating a festive atmosphere. This public square is famous for the "Masangin" challenge - walking blindfolded between two sacred banyan trees. It\'s a favorite gathering spot for locals and tourists alike.',
+                highlights: [
+                    'Try the famous Masangin challenge',
+                    'Ride colorful LED-lit odong-odong carts',
+                    'Enjoy traditional snacks from street vendors',
+                    'Take photos with spectacular light displays',
+                    'Experience local nightlife and culture'
+                ],
+                bestTime: 'Night (7PM - 11PM)',
+                duration: '1-2 hours',
+                difficulty: 'Easy'
+            }
+        };
+
+        // Open modal function
+        function openModal(destinationId) {
+            const destination = destinations[destinationId];
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalContent.innerHTML = `
+                <div class="modal-header" style="background-image: url('${destination.image}');">
+                    <button class="close-modal" onclick="closeModal()">×</button>
+                    <h2 class="modal-title">${destination.icon} ${destination.name}</h2>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-section">
+                        <h3>📖 About This Destination</h3>
+                        <p>${destination.description}</p>
+                    </div>
+                    
+                    <div class="info-grid">
+                        <div class="info-box">
+                            <div class="info-box-icon">🕐</div>
+                            <div class="info-box-label">Best Time</div>
+                            <div class="info-box-value">${destination.bestTime}</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-box-icon">⏱️</div>
+                            <div class="info-box-label">Duration</div>
+                            <div class="info-box-value">${destination.duration}</div>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-box-icon">🎯</div>
+                            <div class="info-box-label">Difficulty</div>
+                            <div class="info-box-value">${destination.difficulty}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-section">
+                        <h3>✨ Highlights & Activities</h3>
+                        <ul>
+                            ${destination.highlights.map(h => `<li>${h}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <button class="modal-cta" onclick="scrollToBooking()">Book This Destination</button>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal function
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Scroll to booking
+        function scrollToBooking() {
+            closeModal();
+            setTimeout(() => {
+                document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        // Auto-advance carousel every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            alert(`Thank you, ${data.name}! Your booking request for ${data.people} person(s) on ${data.date} has been received.\n\nWe'll contact you at ${data.phone} within 24 hours to confirm your adventure!`);
+            this.reset();
+        });
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.carousel-container');
+            if (parallax && scrolled < window.innerHeight) {
+                parallax.style.transform = 'translateY(' + scrolled * 0.5 + 'px)';
+            }
+        });
+
+        // Add entrance animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.destination-card, .service-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease-out';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
